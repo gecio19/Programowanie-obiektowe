@@ -36,12 +36,12 @@ namespace Tello.Controllers
         {
             var check = _accountService.LoginUser(dto);
 
-            if(!check) 
+            if(check == 0) 
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ModelState);
             }
 
-            return Ok();
+            return Ok(check);
         }
 
 

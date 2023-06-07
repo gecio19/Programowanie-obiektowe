@@ -4,6 +4,7 @@ const url_register = "https://localhost:7084/api/account/register";
 const url_login = "https://localhost:7084/api/account/login";
 const alert_showTime = 2500;
 
+let Userid;
 
 async function postData(url = "", data = {}) {
     const response = await fetch(url, {
@@ -40,6 +41,8 @@ async function postData(url = "", data = {}) {
     }
   ).then((response) => {
     
+
+
       if(response.status == 400) // błąd
       {
         console.log("cos zle");
@@ -47,6 +50,7 @@ async function postData(url = "", data = {}) {
       }
       else // bez błędu
       {
+       // window.location.href ="Workspace.html"
         console.log("GITARA");
         
 
@@ -68,14 +72,22 @@ function Login()
       "Password": password
     }
   ).then((response) => {
-    
       if(response.status == 400) // błąd
       {
         console.log("cos zle");
         Show_Error();
       }
-      else // bez błędu
+      else 
       {
+        response.json().then(json => {
+      
+          console.log(json);
+
+          deleteAllCookies();
+          document.cookie = json + "=User_Id";
+        });
+
+        window.location.href ="Workspace.html";
         console.log("GITARA");
       }
   });
@@ -94,4 +106,16 @@ function Hide_Error()
 {
   var _error = document.getElementById("Error_Alert");
   _error.style.visibility = "hidden";
+}
+
+
+function deleteAllCookies() {
+  const cookies = document.cookie.split(";");
+
+  for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
 }

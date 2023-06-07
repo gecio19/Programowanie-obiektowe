@@ -7,6 +7,6 @@ https://codepen.io/alvarotrigo/pen/vYrBbzj
 https://codepen.io/mamislimen/pen/jOwwLvy
 
 
-//Templete:
 
-https://startbootstrap.com/template/shop-homepage
+//DragAble Cards
+http://frontendfreecode.com/draggable-cards-with-bootstrap-grids

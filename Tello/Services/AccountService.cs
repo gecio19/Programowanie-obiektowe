@@ -16,7 +16,6 @@ public class AccountService : IAccountService
         _passwordHasher = passwordHasher;
     }
 
-
     public void RegisterUser(RegisterUserDto dto)
     {
         var newUser = new User()
@@ -33,24 +32,23 @@ public class AccountService : IAccountService
         _context.SaveChanges();
     }
 
-
-    public bool LoginUser(LoginDto dto)
+    public int LoginUser(LoginDto dto)
     {
         var user = _context.Users
             .Include(u => u.Role)
             .FirstOrDefault(u => u.Email == dto.Email);
         if (user is null)
         {
-            return false;
+            return 0;
         }
 
         var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
 
         if (result == PasswordVerificationResult.Failed)
         {
-            return false;
+            return 0;
         }
-        return true;
+        return user.Id;
     }
 
 
@@ -70,7 +68,7 @@ public class AccountService : IAccountService
 public interface IAccountService
 {
     public void RegisterUser(RegisterUserDto dto);
-    public bool LoginUser(LoginDto dto);
+    public int LoginUser(LoginDto dto);
 
 
 }
